@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN ng build --prod
 
 FROM nginx:stable
 
