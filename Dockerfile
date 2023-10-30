@@ -1,21 +1,19 @@
-FROM node:14 as build
+FROM node:20.9.0-alpine as build
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install -g @angular/cli
-
 RUN npm install
+
+RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
 
 COPY . .
 
-RUN ng build --prod
+RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:stable
 
-COPY --from=build /app/dist/ /usr/share/nginx/html
+COPY --from=build /app/crudtuto-front/ /usr/share/nginx/html
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
