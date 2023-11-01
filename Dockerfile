@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm build --prod
+RUN ng build --prod
 
 FROM nginx:stable
 COPY --from=build /app/crudtuto-front/ /usr/share/nginx/html
