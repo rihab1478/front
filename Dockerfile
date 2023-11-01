@@ -1,8 +1,8 @@
 FROM node:14-alpine as build
 WORKDIR /app
-RUN npm cache clean --force
-COPY . .
+COPY package*.json ./
 RUN npm install
+COPY . .
 RUN npm run build --prod
 
 FROM nginx:latest AS ngi
